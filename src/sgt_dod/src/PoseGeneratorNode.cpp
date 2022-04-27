@@ -3,21 +3,22 @@
 //
 
 #include <ros/ros.h>
-#include <std_msgs/Int8.h>
+#include <geometry_msgs/Pose2D.h>
 #include <stdlib.h>
 #include <time.h>
 
 int main(int argc, char **argv) {
-    ros::init(argc, argv, "number_generator_node");
+    ros::init(argc, argv, "pose_generator_node");
     ros::NodeHandle handle;
 
-    ros::Publisher publisher = handle.advertise<std_msgs::Int8>("generated_numbers", 1);
+    ros::Publisher publisher = handle.advertise<geometry_msgs::Pose2D>("generated_pose", 1);
 
     srand(time(NULL));
-    std_msgs::Int8 number;
+    geometry_msgs::Pose2D number;
 
     while (ros::ok()) {
-        number.data = (rand() % 200) - 100;
+        number.x = static_cast<float>((rand() % 200) - 100);
+        number.y = static_cast<float>((rand() % 200) - 100);
         publisher.publish(number);
         ros::Duration(1).sleep();
     }

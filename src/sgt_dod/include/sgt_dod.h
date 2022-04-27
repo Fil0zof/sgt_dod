@@ -43,6 +43,21 @@ namespace sgt_dod {
     int execute(const std::string &command) {
         std::string fullCommand("cd ~/sgt/dod/ && ");
         fullCommand.append(command);
+        int commandResponse = system(fullCommand.data());
+        return commandResponse;
+    }
+
+    int execute(const std::string &command, const std::string &nLines) {
+        std::string fullCommand("cd ~/sgt/dod/ && ");
+        fullCommand.append(command).append(" | head -n ").append(nLines);
+        int commandResponse = system(fullCommand.data());
+        return commandResponse;
+    }
+
+
+    int executeInNewTerminal(const std::string &command, const std::string &terminalTitle) {
+        std::string fullCommand("gnome-terminal ");
+        fullCommand.append(" --title ").append(terminalTitle).append(" -- ").append(command);
         return system(fullCommand.data());
     }
 
